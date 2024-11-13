@@ -3,20 +3,19 @@
 # --- Configuration (Customize these) ---
 GIT_REPO="https://github.com/FancybearIN/imart.git"
 PROJECT_DIR="/var/www/html/imart" 
-DB_HOST="localhost"
-DB_NAME="imart"  
-DB_USER="imart_user"  
-DB_PASS="kali" # Use a strong, unique password
+DB_NAME="imart"
+DB_USER="imart_user"
+DB_PASS="kali" # Use a strong, unique password!
 
 # --- 1. Install Dependencies ---
 sudo apt update
-sudo apt install -y apache2 mysql-server php php-mysql php-mbstring php-gd git 
+sudo apt install -y apache2 mariadb-server php php-mysql php-mbstring php-gd git 
 
 # --- 2. Configure Apache for Dynamic IP ---
 IP_ADDRESS=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 IP_PREFIX=$(echo "$IP_ADDRESS" | cut -d. -f1-3)
 
-cat << EOF > /etc/apache2/sites-available/clinic.conf
+cat << EOF > /etc/apache2/sites-available/imart.conf 
 <VirtualHost *:80>
     ServerName $IP_PREFIX.*
     DocumentRoot $PROJECT_DIR # Point to the project's directory
@@ -44,7 +43,7 @@ EOF
 # --- SQL statements from database.sh (add your SQL statements here) ---
 # Example:
 # SQL_CREATE_USERS="CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL);"
-# mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "$SQL_CREATE_USERS"
+# mysql -h "localhost" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "$SQL_CREATE_USERS"
 
 # --- 4. Clone the Repository ---
 if [ ! -d "$PROJECT_DIR" ]; then

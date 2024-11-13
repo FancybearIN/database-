@@ -23,6 +23,18 @@
             height: 100px;
             margin-bottom: 10px;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -36,24 +48,27 @@
         </form>
 
         <?php
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query = $_POST['query'];
             if (!empty($query)) {
-                // Database connection details (replace with your own)
-                   // Database connection details (replace with your own)
-                   $dbHost = "localhost";
-                   $dbName = "imart"; // Database name
-                   $dbUser = "imart_user";
-                   $dbPass = "kali";
-   
+                $dbHost = "localhost";
+                $dbName = "imart"; 
+                $dbUser = "imart_user";
+                $dbPass = "kali";
 
                 try {
                     $conn = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
                     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                    if ($conn->exec($query) === false) {
-                        // Query returned a result set (SELECT, SHOW, etc.)
-                        $stmt = $conn->query($query);
+                    // Use prepare and execute for potentially unsafe queries
+                    $stmt = $conn->prepare($query);
+                    $stmt->execute();
+
+                    // Check if the query potentially returns a result set
+                    if ($stmt->columnCount() > 0) {
                         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         if (!empty($result)) {
@@ -77,8 +92,8 @@
                             echo "<p>No results found.</p>";
                         }
                     } else {
-                        // Query was a DML statement (UPDATE, DELETE, INSERT)
-                        $rowsAffected = $conn->exec($query);
+                        // Likely a DML statement, get the number of affected rows
+                        $rowsAffected = $stmt->rowCount();
                         echo "<p>$rowsAffected rows affected.</p>";
                     }
 
