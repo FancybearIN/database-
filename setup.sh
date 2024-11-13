@@ -27,7 +27,7 @@ cat << EOF > /etc/apache2/sites-available/clinic.conf
 </VirtualHost>
 EOF
 
-sudo a2ensite clinic.conf
+sudo a2ensite imart.conf
 sudo a2dissite 000-default.conf
 sudo systemctl reload apache2
 

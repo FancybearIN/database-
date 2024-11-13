@@ -40,10 +40,12 @@
             $query = $_POST['query'];
             if (!empty($query)) {
                 // Database connection details (replace with your own)
-                $dbHost = "localhost";
-                $dbName = "your_database_name";
-                $dbUser = "your_database_user";
-                $dbPass = "your_database_password";
+                   // Database connection details (replace with your own)
+                   $dbHost = "localhost";
+                   $dbName = "imart"; // Database name
+                   $dbUser = "imart_user";
+                   $dbPass = "kali";
+   
 
                 try {
                     $conn = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
