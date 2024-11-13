@@ -40,7 +40,7 @@ GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'localhost';
 FLUSH PRIVILEGES;
 EXIT
 EOF
-sudo bash database.sh
+
 # --- SQL statements from database.sh (add your SQL statements here) ---
 # Example:
 # SQL_CREATE_USERS="CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL);"
