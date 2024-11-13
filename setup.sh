@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # --- Configuration (Customize these) ---
-GIT_REPO="https://github.com/FancybearIN/clinic.git"
-PROJECT_DIR="/var/www/html/clinic" 
+GIT_REPO="https://github.com/FancybearIN/imart.git"
+PROJECT_DIR="/var/www/html/imart" 
 DB_HOST="localhost"
 DB_NAME="imart"  # Using the database name from database.sh
 DB_USER="imart_user"  # Using the database user from database.sh
